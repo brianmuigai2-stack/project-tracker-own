@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
+  @apply bg-gray-100 text-gray-900;
+} */
+:root {
+  /* Base Font Size Variable (Initial size) */
+  --font-size-base: 16px; 
+  font-size: var(--font-size-base);
+  
+  /* Base Colors (Light Theme Defaults - These are the Indigo Theme colors) */
+  --color-bg-primary: #ffffff; /* White (Navbar/Card BG) */
+  --color-bg-secondary: #f9fafb; /* Gray-50 (App background) */
+  --color-text-primary: #111827; /* Gray-900 */
+  --color-text-secondary: #6b7280; /* Gray-500 */
+  --color-border: #e5e7eb; /* Gray-200 */
+
+  /* Default Accent Color (Theme Indigo) */
+  --color-accent-600: #4f46e5; /* Indigo */
+  --color-accent-500: #6366f1; /* Indigo Light */
+  --color-red-500: #ef4444; /* Standard Red for Delete/Error */
+
+  /* Apply base colors to the body/app root */
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s, color 0.3s, font-size 0.2s;
+}
+
+/* --- 2. Dark Theme Overrides (Toggled by html.dark) --- */
+html.dark {
+  /* Dark Mode Colors (Indigo Dark Defaults) */
+  --color-bg-primary: #1f2937; /* Gray-800 (Navbar/Card BG) */
+  --color-bg-secondary: #111827; /* Gray-900 (App background) */
+  --color-text-primary: #f3f4f6; /* Gray-100 */
+  --color-text-secondary: #9ca3af; /* Gray-400 */
+  --color-border: #374151; /* Gray-700 */
+}
+
+/* --- 3. Color Theme Definitions (Toggled by html.theme-X) --- */
+
+/* Teal Theme Override */
+html.theme-teal {
+  /* Light Mode Teal Theme */
+  --color-accent-600: #0d9488; /* Teal Accent */
+  --color-accent-500: #14b8a6; 
+  
+  --color-bg-primary: #f0fdfa; /* Very Light Teal Card/Navbar BG */
+  --color-bg-secondary: #f6fffb; /* Extremely Light Teal App BG */
+  --color-text-primary: #134e4a; /* Dark Teal Text */
+  --color-border: #99f6e4; /* Light Teal Border */
+}
+/* Teal Theme Dark Mode Override */
+html.dark.theme-teal {
+  --color-accent-600: #14b8a6; /* Teal Accent */
+  --color-accent-500: #2dd4bf;
+  
+  --color-bg-primary: #134e4a; /* Dark Teal Card/Navbar BG */
+  --color-bg-secondary: #0f3c3a; /* Darker Teal App BG */
+  --color-text-primary: #f0fdfa; /* Very Light Teal Text */
+  --color-border: #5eead4; /* Medium Teal Border */
+}
+
+
+/* Purple Theme Override */
+html.theme-purple {
+  /* Light Mode Purple Theme */
+  --color-accent-600: #9333ea; /* Purple Accent */
+  --color-accent-500: #a855f7; 
+  
+  --color-bg-primary: #faf5ff; /* Very Light Purple Card/Navbar BG */
+  --color-bg-secondary: #fdfcff; /* Extremely Light Purple App BG */
+  --color-text-primary: #581c87; /* Dark Purple Text */
+  --color-border: #d8b4fe; /* Light Purple Border */
+}
+/* Purple Theme Dark Mode Override */
+html.dark.theme-purple {
+  --color-accent-600: #a855f7; /* Purple Accent */
+  --color-accent-500: #c084fc;
+  
+  --color-bg-primary: #4a0e7e; /* Dark Purple Card/Navbar BG */
+  --color-bg-secondary: #390b60; /* Darker Purple App BG */
+  --color-text-primary: #f3e8ff; /* Very Light Purple Text */
+  --color-border: #c4b5fd; /* Medium Purple Border */
+}
+
+/* --- 4. Global Element Styles (Using Variables) --- */
+.card, .form-container, .navbar {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.input-field {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+/* Ensure the root div takes up the font size */
+#root, body {
+  height: 100%;
+  width: 100%;
+}

@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom colors (optional) */
+:root {
+  --accentA: #ff6b6b;
+  --accentB: #7c3aed;
+  --accentC: #06b6d4;
+}
