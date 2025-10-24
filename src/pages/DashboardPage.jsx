@@ -1,5 +1,3 @@
-// src/pages/DashboardPage.jsx
-
 import React from 'react';
 import { useProjects } from '../context/ProjectsContext'; 
 import ProjectList from '../components/ProjectList';
@@ -27,14 +25,8 @@ const SummaryCard = ({ icon, label, count, color, percentage }) => (
 
 function DashboardPage() {
   const { user } = useAuth();
-  const { projects, isLoading, error } = useProjects(); 
-
-  // Debug: Log the projects to see if they're being loaded
-  React.useEffect(() => {
-    console.log('DashboardPage - Projects:', projects);
-    console.log('DashboardPage - Is Loading:', isLoading);
-    console.log('DashboardPage - Error:', error);
-  }, [projects, isLoading, error]);
+  // 1. Get the updateProject function from the context
+  const { projects, isLoading, error, updateProject } = useProjects(); 
 
   const totalProjects = projects.length;
   const completedProjects = projects.filter(p => p.status === 'Completed').length;
@@ -66,42 +58,14 @@ function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        <SummaryCard 
-          icon="📝" 
-          label="Total Projects" 
-          count={totalProjects} 
-          color="#3b82f6" 
-        />
-        <SummaryCard 
-          icon="⏳" 
-          label="Pending Projects" 
-          count={pendingProjects} 
-          color="#f59e0b" 
-        />
-        <SummaryCard 
-          icon="✅" 
-          label="Completed Projects" 
-          count={completedProjects} 
-          color="#10b981" 
-        />
-        <SummaryCard 
-          icon="📈" 
-          label="Completion Rate" 
-          count={completionRate} 
-          color="#ef4444" 
-          percentage={completionRate}
-        />
+        <SummaryCard icon="📝" label="Total Projects" count={totalProjects} color="#3b82f6" />
+        <SummaryCard icon="⏳" label="Pending Projects" count={pendingProjects} color="#f59e0b" />
+        <SummaryCard icon="✅" label="Completed Projects" count={completedProjects} color="#10b981" />
+        <SummaryCard icon="📈" label="Completion Rate" count={completionRate} color="#ef4444" percentage={completionRate} />
       </div>
 
-      {/* Debug: Show the number of projects */}
-      <div className="mb-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          Debug: Found {projects.length} projects in the context. Is Loading: {isLoading.toString()}.
-        </p>
-      </div>
-
-      {/* Pass the projects explicitly to ProjectList */}
-      <ProjectList projects={projects} />
+      {/* 2. Pass the function to ProjectList as a prop named "onUpdateProject" */}
+      <ProjectList projects={projects} onUpdateProject={updateProject} />
     </div>
   );
 }

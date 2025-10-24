@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3001/projects";
+const API_URL = "https://poppy-flix-server-88cl.vercel.app/projects";
 
 export const fetchProjects = () =>
   fetch(API_URL).then(res => res.json());

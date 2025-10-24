@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 
+// ===================================================================
+// IMPORTANT: These helper functions at the top are required.
+// Do not delete them.
+// ===================================================================
+
 // List of icons for projects
 const PROJECT_ICONS = [
   '📊', '📈', '📉', '📋', '📝', '🗂️', '📁', '🗃️', 
@@ -34,6 +39,10 @@ function getProjectCreator(projectId) {
     avatar: `https://i.pravatar.cc/150?img=${avatarIndex}`
   };
 }
+
+// ===================================================================
+// Main Component
+// ===================================================================
 
 function ProjectListItem({ project, onDelete, onUpdateProject }) {
   // State for managing edit mode
@@ -85,6 +94,15 @@ function ProjectListItem({ project, onDelete, onUpdateProject }) {
   const handleCancelClick = () => {
     setIsEditing(false);
     setTempProgress(progress); 
+  };
+
+  // Handler for deleting with confirmation
+  const handleDeleteClick = () => {
+    const isConfirmed = window.confirm(`Are you sure you want to delete "${project.title}"? This action cannot be undone.`);
+    
+    if (isConfirmed) {
+      onDelete(project.id);
+    }
   };
 
   return (
@@ -158,7 +176,7 @@ function ProjectListItem({ project, onDelete, onUpdateProject }) {
       {/* 6. Delete Button */}
       <div className="w-20 text-right">
         <button
-          onClick={() => onDelete(project.id)}
+          onClick={handleDeleteClick}
           className="bg-red-500 text-white text-xs font-medium py-1 px-2 rounded-lg hover:bg-red-600 transition"
           aria-label="Delete Project"
         >

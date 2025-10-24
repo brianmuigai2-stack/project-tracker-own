@@ -1,6 +1,4 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-
-// --- IMPORT YOUR JSON FILE ---
 import db from '../../db.json'; 
 
 const ProjectsContext = createContext();
@@ -14,40 +12,26 @@ export const ProjectsProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // This effect runs once on component mount to load the initial data
+    // --- LOADING LOGIC (runs once on startup) ---
     useEffect(() => {
-        const loadProjects = () => {
-            try {
-                setIsLoading(true);
-                setError(null);
+        const savedProjects = localStorage.getItem('projects');
+        
+        if (savedProjects && savedProjects !== '[]') {
+            setProjects(JSON.parse(savedProjects));
+        } else {
+            setProjects(db.projects);
+        }
+        setIsLoading(false);
+    }, []);
 
-                const savedProjects = localStorage.getItem('projects');
-                
-                // --- THE FIX IS HERE ---
-                // Only use localStorage data if it exists AND is not an empty array string.
-                if (savedProjects && savedProjects !== '[]') {
-                    const parsedProjects = JSON.parse(savedProjects);
-                    setProjects(parsedProjects);
-                } else {
-                    // If localStorage is empty or has an empty array, load from the JSON file.
-                    setProjects(db.projects);
-                }
-            } catch (e) {
-                console.error("Failed to load projects:", e);
-                setError("Failed to load projects. Please refresh the page.");
-                // As a fallback, try to load from the JSON file
-                setProjects(db.projects);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        loadProjects();
-    }, []); // Empty dependency array means this runs only once
-
-    // This effect saves the projects to localStorage whenever they change
+    // --- SAVING LOGIC (runs whenever 'projects' changes) ---
+    // --- THE FIX IS HERE ---
     useEffect(() => {
-        localStorage.setItem('projects', JSON.stringify(projects));
+        // Only save if there are actually projects to save.
+        // This prevents accidentally overwriting localStorage with an empty array.
+        if (projects.length > 0) {
+            localStorage.setItem('projects', JSON.stringify(projects));
+        }
     }, [projects]);
 
     const addProject = (projectData) => {
@@ -62,7 +46,6 @@ export const ProjectsProvider = ({ children }) => {
             status: projectData.status || 'In Progress',
             createdAt: new Date().toISOString(),
         };
-
         setProjects(prevProjects => [...prevProjects, newProject]);
     };
 
